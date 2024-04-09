@@ -1,0 +1,22 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+{% if nds!='0'%}
+<p class="w3-text-red">Achtung! Spind in Gebrauch!</p>
+<p>Name: {{spind.vorname}} {{spind.nachname}}</p>
+{% endif %}
+<p>Spind Nummer: {{spind.nummer}}</p>
+<p>Schlüsselnummer: {{spind.schluessel}}</p>
+<p>Gesperrt: {% if spind.gesperrt==0 %}nein{% else %}ja{% endif %}</p>
+<br>
+<form action="{{ url_for('bp_admin.admin_spind_sperren_freigeben_bestaetigt')}}" method="POST">
+    {{ submit_form.hidden_tag() }}
+    {{ submit_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin_spind_sperren_freigeben')}}">Zurück zur Auswahl</a>
+</div>
+{% endblock %}

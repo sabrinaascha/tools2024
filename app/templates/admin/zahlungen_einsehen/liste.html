@@ -1,0 +1,30 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+    <table class="w3-table w3-striped w3-border">
+        <tr>
+            <th>ID</th>
+            <th>NDS</th>
+            <th>Spind</th>
+            <th>Wert</th>
+            <th>Grund</th>
+            <th>Zeitpunkt</th>
+        </tr>
+        {% for zahlung in zahlungen %}
+            <tr>
+                <td>{{ zahlung.id }}</td>
+                <td>{{ zahlung.nds }}</td>
+                <td>{{ zahlung.spind }}</td>
+                <td>{{ zahlung.wert }}</td>
+                <td>{{ zahlung.grund }}</td>
+                <td>{{ zahlung.timestamp }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

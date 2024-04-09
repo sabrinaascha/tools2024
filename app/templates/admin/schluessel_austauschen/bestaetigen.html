@@ -1,0 +1,27 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+{% if nds!='0'%}
+<p class="w3-text-red">Achtung! Spind in Gebrauch!</p>
+{% endif %}
+<p>Spind Nummer: {{spind.nummer}}</p>
+<p>Derzeitige Schlüsselnummer: {{spind.schluessel}}</p>
+<br>
+<p>
+Bitte Neue Schlüsselnummer eingeben:
+(Für keinen Schlüssel, geben Sie bitte 0 ein. In diesem Fall sollte der Spind aber auch gesperrt werden!)
+</p>
+<br>
+<form action="{{ url_for('bp_admin.admin_schluessel_austauschen_bestaetigt')}}" method="POST">
+    {{ schluessel_eintragen_form.hidden_tag() }}
+    {{ schluessel_eintragen_form.schluessel.label}}
+    {{ schluessel_eintragen_form.schluessel()}}
+    {{ schluessel_eintragen_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin_schluessel_austauschen')}}">Zurück zur Auswahl</a>
+</div>
+{% endblock %}

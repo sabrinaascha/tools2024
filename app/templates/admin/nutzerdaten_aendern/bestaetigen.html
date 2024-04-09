@@ -1,0 +1,30 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<form action="{{ url_for('bp_admin.admin_nutzerdaten_aendern_bestaetigt')}}" method="POST">
+    {{ aendern_form.hidden_tag() }}
+    <p>Spind: {{spind.nummer}}</p>
+    <p>Name: {{aendern_form.name()}}</p>
+    <p>Vorname: {{aendern_form.vorname()}}</p>
+    <p>Schlüssel: {{aendern_form.schluessel()}}</p>
+    <p>NDS: {{aendern_form.nds()}}</p>
+    <p>Matrikelnummer: {{aendern_form.matrikelnr()}}</p>
+    <p>Bezahlt bis: {{spind.bezahlt_bis}}</p>
+    {% if spind.gesperrt==0 %}
+    <p>Gesperrt: nein</p>
+    {% elif spind.gesperrt==1 %}
+    <p>Gesperrt: ja</p>
+    {% endif %}
+    <p>Info: {{aendern_form.info()}}</p>
+    <p>Email: {{aendern_form.mail()}}</p>
+    <p>Fakultät: {{aendern_form.fak()}}</p>
+    
+    {{ aendern_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin_nutzerdaten_aendern')}}">Zurück zur Auswahl</a>
+</div>
+{% endblock %}

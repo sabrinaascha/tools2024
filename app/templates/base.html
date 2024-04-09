@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <title>Spindvergabe</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Lato", sans-serif
+    }
+
+    pre {
+            white-space: pre-wrap;
+        }
+
+    .w3-bar,
+    h1,
+    button {
+      font-family: "Montserrat", sans-serif
+    }
+
+    .fa-anchor,
+    .fa-coffee {
+      font-size: 200px
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-fids-color w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)"
+        onclick="openNavbar()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="{{ url_for('bp_index.index')}}" class="w3-bar-item w3-button w3-padding-large">Home</a>
+      <a href="{{ url_for('bp_mieten.mieten')}}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Themen Suche</a>
+      <a href="{{ url_for('bp_preise.preise')}}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Regeln</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-padding-large w3-button" title="Info">Info<i class="fa fa-caret-down"
+            style="padding-left: 10px;"></i></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="{{ url_for('bp_info.impressum')}}" class="w3-bar-item w3-button">Impressum</a>
+          <a href="https://www.uni-regensburg.de/datenschutz/startseite/index.html"
+            class="w3-bar-item w3-button">Datenschutz</a>
+          <a href="{{ url_for('bp_info.agb')}}" class="w3-bar-item w3-button">AGB</a>
+        </div>
+      </div>
+
+      <a href="{{ url_for('bp_profile.profile')}}" class="w3-padding-large w3-button w3-right">Profil</a>
+      <!-- <a hidden href="{{ url_for('bp_admin.admin')}}" class="w3-padding-large w3-button w3-right" id="adminButtonDesktop">Admin</a> -->
+    </div>
+  </div>
+
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <div id="navDemo" class="w3-bar-block w3-fids-color w3-hide w3-hide-large w3-hide-medium w3-top"
+    style="margin-top:46px">
+    <a href="{{ url_for('bp_mieten.mieten')}}" class="w3-bar-item w3-button w3-padding-large"
+      onclick="openNavbar()">Mieten</a>
+    <a href="{{ url_for('bp_preise.preise')}}" class="w3-bar-item w3-button w3-padding-large"
+      onclick="openNavbar()">Preise</a>
+    <a href="{{ url_for('bp_info.info')}}" class="w3-bar-item w3-button w3-padding-large"
+      onclick="openNavbar()">Info</a>
+    <!-- <a id="adminButtonMobile"  href="{{ url_for('bp_admin.admin')}}" class="w3-bar-item w3-button w3-padding-large w3-black"
+      onclick="openNavbar()" hidden>Admin</a> -->
+  </div>
+
+
+  <!-- Page content -->
+  <div style="margin-top: 45px;">
+    {%block body%}{%endblock%}
+  </div>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-center w3-opacity w3-dark-grey">
+    <div class="w3-medium w3-padding-16">
+      <a class="own-footer" href="{{ url_for('bp_info.impressum')}}"
+        style="padding-left: 10px; padding-right: 10px;">Impressum</a>
+      <a class="own-footer" href="https://www.uni-regensburg.de/datenschutz/startseite/index.html"
+        style="padding-left: 10px; padding-right: 10px;">Datenschutz</a>
+      <a class="own-footer" href="{{ url_for('bp_info.agb')}}" style="padding-left: 10px; padding-right: 10px;">AGB</a>
+      <a class="own-footer" href="{{ url_for('bp_admin.admin')}}" style="padding-left: 10px; padding-right: 10px;">Admin</a>
+    </div>
+  </footer>
+
+  <script>
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function openNavbar() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<h2>{{header}}</h2>
+
+<table class="w3-table w3-striped w3-border">
+    <tr>
+        <th>Spind</th>
+        <th>Email</th>
+        {%if header=="Unbezahlte/Abgelaufene Spinde"%}
+        <th>Bezahlt bis</th>
+        {%else%}
+        <th>Bestellt am</th>
+        {%endif%}
+    </tr>
+    {% for spind in lockers %}
+        <tr>
+            <td>{{ spind.nummer }}</td>
+            <td>{{ spind.mail }}</td>
+            {%if header=="Unbezahlte/Abgelaufene Spinde"%}
+            <td>{{ spind.bezahlt_bis }}</td>
+            {%else%}
+            <td>{{ spind.bestellt_am }}</td>
+            {%endif%}
+        </tr>
+    {% endfor %}
+</table>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{%block pageContent%}
+
+
+<!-- Header -->
+<div class="w3-container w3-center" style="padding-bottom: 32px;">
+  <h1><b>Login</b></h1>
+</div>
+
+
+<form class="w3-container" method="POST">
+
+  <p><i>Sie sind nicht eingeloggt!</i></p>
+  <p>Bitte melden Sie sich mit ihrer NDS Kennung an.</p>
+
+  <div class="w3-section">
+    <label><b>NDS-Kennung</b></label>
+    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="NDS-Kennung" name="nds" required>
+    <label><b>Passwort*</b></label>
+    <input class="w3-input w3-border" type="password" placeholder="Passwort" name="psw" required>
+    {% for message in get_flashed_messages(category_filter=["login"])%}
+    <p>{{ message }}</p>
+    {% endfor %}
+    <button class="w3-button w3-fids-color w3-padding-large w3-large w3-margin-top w3-round"
+      type="submit">Login</button>
+    <br>
+    <br>
+    *Das Passwort wird nur benötigt um Sie zu verifizieren. Passwörter werden nicht gespeichert.
+  </div>
+
+
+</form>
+
+{%endblock%}

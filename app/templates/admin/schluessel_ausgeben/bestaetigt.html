@@ -1,0 +1,11 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<p>Bestaetigt!</p>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

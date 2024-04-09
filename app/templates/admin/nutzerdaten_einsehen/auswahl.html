@@ -1,0 +1,64 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<h2>Nutzerdaten einsehen</h2>
+
+<!-- Forms -->
+<form method="POST">
+    {{ schluessel_form.hidden_tag() }}
+
+    {{ schluessel_form.schluessel.label }}
+    {{ schluessel_form.schluessel() }}
+
+     {% for message in get_flashed_messages(category_filter=["schluessel"]) %}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ schluessel_form.submit() }}
+</form>
+<p>Oder</p>
+<form method="POST">
+    {{ nummer_form.hidden_tag() }}
+
+    {{ nummer_form.nummer.label }}
+    {{ nummer_form.nummer() }}
+
+     {% for message in get_flashed_messages(category_filter=["nummer"]) %}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ nummer_form.submit() }}
+</form>
+<p>Oder</p>
+<form method="POST">
+    {{ nds_form.hidden_tag() }}
+
+    {{ nds_form.nds.label }}
+    {{ nds_form.nds() }}
+
+    {% for message in get_flashed_messages(category_filter=["nds"]) %}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ nds_form.submit() }}   
+</form>
+<p>Oder</p>
+<form method="POST">
+    {{ matrikel_form.hidden_tag() }}
+
+    {{ matrikel_form.matrikelnr.label }}
+    {{ matrikel_form.matrikelnr() }}
+
+    {% for message in get_flashed_messages(category_filter=["matrikelnr"])%}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ matrikel_form.submit() }}    
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

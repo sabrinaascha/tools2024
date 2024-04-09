@@ -1,0 +1,27 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<p>Name: {{spind.vorname}} {{spind.nachname}}</p>
+<p>Spind: {{spind.nummer}}</p>
+<p>Schlüssel: {{spind.schluessel}}</p>
+<p>NDS: {{spind.nds}}</p>
+<p>Matrikelnummer: {{spind.matrikelnr}}</p>
+<p>Bezahlt bis: {{spind.bezahlt_bis}}</p>
+<p>Gesperrt: {{spind.gesperrt}}</p>
+<p>Email: {{spind.mail}}</p>
+<p>Fakultät {{spind.fak}}</p>
+<br>
+<form action="{{ url_for('bp_admin.admin_spindmiete_verlaengern_bestaetigt')}}" method="POST" >
+    {{ verlaengern_form.hidden_tag() }}
+    {{ verlaengern_form.bis.label }}
+    <br/>
+    {{ verlaengern_form.bis() }}
+    {{ verlaengern_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin_spindmiete_verlaengern')}}">Zurück zur Auswahl</a>
+</div>
+{% endblock %}

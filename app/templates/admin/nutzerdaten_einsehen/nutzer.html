@@ -1,0 +1,21 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+    
+<p>Name: {{spind.vorname}} {{spind.nachname}}</p>
+<p>Spind: {{spind.nummer}}</p>
+<p>Schlüssel: {{spind.schluessel}}</p>
+<p>NDS: {{spind.nds}}</p>
+<p>Matrikelnummer: {{spind.matrikelnr}}</p>
+<p>Bezahlt bis: {{spind.bezahlt_bis}}</p>
+<p>Gesperrt: {{spind.gesperrt}}</p>
+<p>Info: {{spind.info}}</p>
+<p>Email: {{spind.mail}}</p>
+<p>Fakultät {{spind.fak}}</p>
+<br>
+
+<a href="{{url_for('bp_admin.admin_nutzerdaten_einsehen')}}">Zurück zur Auswahl</a>
+</div>
+{% endblock %}

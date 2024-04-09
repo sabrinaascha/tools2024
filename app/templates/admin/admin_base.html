@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="w3-container">
+<h1>Admin Schnittstelle</h1>
+<ul>
+    <li><a href="{{url_for('bp_admin.admin_schluessel_ausgeben')}}">Schlüssel ausgeben</a></li>
+    <li><a href="{{url_for('bp_admin.admin_spindmiete_verlaengern')}}">Spindmiete verlängern</a></li>
+    <li><a href="{{url_for('bp_admin.admin_miete_beenden')}}">Miete beenden</a></li>
+    <li><a href="{{url_for('bp_admin.admin_nutzerdaten_einsehen')}}">Nutzerdaten einsehen</a></li>
+    <li><a href="{{url_for('bp_admin.admin_nutzerdaten_aendern')}}">Nutzerdaten ändern</a></li>
+    <li><a href="{{url_for('bp_admin.admin_spind_sperren_freigeben')}}">Spind Sperre/freigeben (bei defekt, etc.)</a></li>
+    <li><a href="{{url_for('bp_admin.admin_schluessel_austauschen')}}">Schlüssel austauschen</a></li>
+    <li><a href="{{url_for('bp_admin.admin_student_umbuchen')}}">Student auf anderen Spind umbuche</a>n</li>
+    <li><a href="{{url_for('bp_admin.admin_zahlungen_einsehen')}}">Zahlungen einsehen</a></li>
+    <li><a href="{{url_for('bp_admin.admin_oeffnungszeiten_und_info')}}">Öffnungszeiten und Infotext ändern</a></li>
+    <li><a href="{{url_for('bp_admin.csv_export')}}">Daten exportieren</a></li>
+</ul>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+
+
+<div class="w3-container">
+<h2>Schlüssel ausgeben</h2>    
+<form action="{{ url_for('bp_admin.admin_schluessel_ausgeben')}}" method="POST">
+    {{ ausgabe_form.hidden_tag() }}
+
+    {{ ausgabe_form.nds.label }}
+    <br>
+    {{ ausgabe_form.nds() }}
+    
+    {% for message in get_flashed_messages(category_filter=["nds"])%}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+    
+    <br/>
+    {{ ausgabe_form.schluessel_passwort.label }}
+    <br>
+    {{ ausgabe_form.schluessel_passwort()}}
+    <br>
+    {{ ausgabe_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

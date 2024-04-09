@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block pageContent %}
+
+
+<!-- Header -->
+<div class="w3-container w3-center" style="padding-bottom: 32px;">
+    <h1><b>Fehler!</b></h1>
+</div>
+
+<div class="w3-panel w3-red">
+    <p>Leider gab es Probleme beim Laden der Website...</p>
+    <p>Bitte versuchen Sie es später erneut.</p>
+</div> 
+
+
+<div class="w3-container w3-padding-16">
+    <a href="{{ url_for('bp_index.index')}}"
+        class="w3-button w3-wiwi-color w3-padding-large w3-large w3-margin-top w3-round">Erneut Versuchen</a>
+</div>
+
+
+{% endblock %}

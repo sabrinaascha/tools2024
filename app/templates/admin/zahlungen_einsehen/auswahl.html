@@ -1,0 +1,23 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<h2>Zahlungen einsehen</h2>
+
+<form method="POST">
+    {{ time_period_form.hidden_tag() }}
+
+    {{ time_period_form.von.label}}
+    {{ time_period_form.von()}}
+
+    {{ time_period_form.bis.label}}
+    {{ time_period_form.bis()}}
+
+    {{ time_period_form.submit()}}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

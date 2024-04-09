@@ -1,0 +1,18 @@
+{%- extends "base.html" -%}
+
+{%- macro responsiveContentSize() -%}
+{% block pageContent %}{% endblock %}
+{%- endmacro -%}
+
+{% block body %}
+
+<!-- This makes the website responsive in terms of screen size -->
+
+<!-- Showing All -->
+<div class="w3-content w3-center">
+    {{ responsiveContentSize() }}
+</div>
+
+
+
+{% endblock %}

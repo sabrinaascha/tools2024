@@ -1,0 +1,243 @@
+{% extends 'layout.html' %}
+
+{% block pageContent %}
+
+<!-- User already got a reservation -->
+<div id="studentHasReservation"  {{ studentHasReservationVis }}>
+  <div class="w3-container w3-center w3-padding-16">
+    <div class="w3-panel w3-border w3-light-grey w3-round-large w3-center">
+      <p><i>Sie haben bereits einen Spind gemietet!</i></p>
+
+      <div class="w3-container w3-center w3-padding-16">
+        <!-- TODO: Exchange this with Template from EXAMPLES.html -->
+        <!-- Locker Card -->
+        <div class="w3-container w3-center w3-padding-16" style="display: inline-block;">
+          <div id="lockerCard" class="w3-card w3-center" style="min-width: 250px; display: inline-block;">
+            <header id="lockerNumber" class="w3-container w3-wiwi-color">
+              <h3>{{ lockerNumber | safe }}</h3>
+            </header>
+
+            <div id="lockerInformation" class="w3-container">
+              {% for o in lockerInformation %}
+              <p value="{{ o | safe }}">{{ o | safe }}</p>
+              {% endfor %}
+            </div>
+
+            <footer class="w3-container w3-wiwi-color"></footer>
+          </div>
+        </div>
+
+        <p>Pro Student ist nur ein Spind reservierbar. Sie können ihre Reservierung in ihrem Profil überprüfen.</p>
+
+        <!-- Mieten Button -->
+        <div class="w3-container w3-center w3-padding-16">
+          <a href="{{ url_for('bp_profile.profile')}}"
+            class="w3-button w3-wiwi-color w3-padding-large w3-large w3-margin-top w3-round">Profil</a>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User does not have a reservation -->
+<div id="studentHasNoReservation"  {{ studentHasNoReservationVis }}>
+
+  <!-- Header with Images -->
+  <div class="w3-container w3-center w3-padding-16">
+    <!-- Header -->
+    <h1><b>Mieten</b></h1>
+
+    <!-- Overview Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="Überblick">
+      <img src="../../static/images/areas/gesamt.png" class="w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Überblick</h3> -->
+    </div>
+
+    <!-- Area 1 Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="1" hidden>
+      <img src="../../static/images/areas/bereich1.png" class=" w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Bereich 1 (UG)</h3> -->
+    </div>
+
+    <!-- Area 2 Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="2" hidden>
+      <img src="../../static/images/areas/bereich2.png" class="w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Bereich 2 (OG)</h3> -->
+    </div>
+
+    <!-- Area 3 Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="3" hidden>
+      <img src="../../static/images/areas/bereich3.png" class="w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Bereich 3 (UG)</h3> -->
+    </div>
+
+    <!-- Area 4 Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="4" hidden>
+      <img src="../../static/images/areas/bereich4.png" class="w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Bereich 4 (UG)</h3> -->
+    </div>
+
+    <!-- Area 5 Image -->
+    <div class="areaImage w3-container w3-center w3-card" id="5" hidden>
+      <img src="../../static/images/areas/bereich5.png" class="w3-center w3-padding-16"
+        style="max-width:100%; max-height:100%;">
+      <!-- <h3>Bereich 5 (OG)</h3> -->
+    </div>
+  </div>
+
+  <!-- Dropdowns -->
+  <div class="w3-container w3-center w3-padding-32">
+    <div class="row">
+
+
+      <div class="w3-container w3-center w3-padding-16">
+        <div style="min-width: 250px; display: inline-block;">
+
+          <!-- Area -->
+          <div class="form-group col-25">
+            <label class="w3-large">Bereich</label>
+            <select class="form-control w3-select w3-border" id="areaOptions">
+              <option value="" disabled selected>Bereich auswählen</option>
+              {% for o in areaOptions %}
+              <option value="{{ o }}">{{ o }}</option>
+              {% endfor %}
+              <!-- {{ areaOptionsHTML  | safe }} -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="w3-container w3-center w3-padding-16">
+        <div style="min-width: 250px; display: inline-block;">
+
+
+          <!-- Locker -->
+          <div class="form-group col-25">
+            <label class="w3-large">Spind</label>
+            <select class="form-control w3-select w3-border w3-disabled" id="lockerOptions" disabled>
+              <option value="" disabled selected>Spind auswählen</option>
+              {% for o in lockerOptions %}
+              <option value="{{ o }}">{{ o }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Reservieren Button -->
+    <div>
+      <button type="button" id="reserveLocker"
+        class="w3-button w3-wiwi-color w3-padding-large w3-large w3-margin-top w3-round" disabled>Reservieren</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts for dynamic Webpage-->
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    // Base URL
+    var baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+    // Set all area options at start of page
+    var dynamicUrl_setAreaOptions = baseUrl + '/_setAreaOptions';
+
+    $.getJSON(dynamicUrl_setAreaOptions, {}).success(function (data) {
+      $('#areaOptions').html(data.areaOptionsHTML);
+
+    })
+
+
+    // Set all locker options at change of area
+    $('#areaOptions').change(function () {
+
+      // Base URL
+      var baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+      // Creates dynamic URL from BaseURL
+      var dynamicUrl_updateLockerOptions = baseUrl + '/_updateLockerOptions';
+
+      $.getJSON(dynamicUrl_updateLockerOptions, {
+        selectedArea: $('#areaOptions').val()
+
+      }).success(function (data) {
+        // Sets all locker options depending on chosen area
+        $('#lockerOptions').html(data.lockerOptionsHTML);
+
+
+        if (data.selectedArea == "Überblick") {
+
+          // Enable Locker Dropdown -> automatically chooses first available locker
+          $('#lockerOptions').addClass("w3-disabled");
+          document.getElementById('lockerOptions').disabled = true;
+
+          // Enable "Reservieren Button"
+          $('#reserveLocker').addClass("w3-disabled");
+          document.getElementById('reserveLocker').disabled = true;
+        } else {
+
+          // Enable Locker Dropdown -> automatically chooses first available locker
+          $('#lockerOptions').removeClass("w3-disabled");
+          document.getElementById('lockerOptions').disabled = false;
+
+          // Enable "Reservieren Button"
+          $('#reserveLocker').removeClass("w3-disabled");
+          document.getElementById('reserveLocker').disabled = false;
+
+        }
+
+        // Enable chosen area image & disable all other
+        // Get all elements with the class 'image'
+        var areaImages = document.getElementsByClassName("areaImage");
+
+        // Iterate through the image elements
+        for (var i = 0; i < areaImages.length; i++) {
+          var currentImage = areaImages[i];
+          if (currentImage.id == data.selectedArea) {
+            // Show selected Area Image
+            currentImage.hidden = false;
+          } else {
+            // Hide other Area Image
+            currentImage.hidden = true;
+          }
+        }
+      })
+    });
+
+
+    // Routes to Confirmation Page
+    $('#reserveLocker').bind('click', function () {
+      
+      // Base URL
+      var baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+      // Creates dynamic URL from BaseURL
+      var dynamicUrl_showConfirmationPage = baseUrl + '/_showConfirmationPage';
+
+      $.getJSON(dynamicUrl_showConfirmationPage, {
+        selectedArea: $('#areaOptions').val(),
+        selectedLocker: $('#lockerOptions').val(),
+
+      }).success(function (data) {
+
+        // Route Page to confirm page
+        if (data.url != null)
+          location.href = data.url;
+      })
+
+      return false;
+
+    });
+
+  });
+</script>
+{% endblock %}

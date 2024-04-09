@@ -1,0 +1,16 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<h2>Statistik</h2>
+<p><span style="font-weight: bold;">{{all_lockers_amount}}</span> Spinde insgesamt</p>
+<p><span style="font-weight: bold;">{{rented_lockers_amount}}</span> Spinde vermietet</p>
+<p><span style="font-weight: bold;">{{rented_unpayed_lockers_amount}}</span> Spinde vermietet/unbezahlt <a href="{{url_for('bp_admin.admin_unbezahlte_spinde')}}">(anzeigen)</a></p>
+<p><span style="font-weight: bold;">{{free_lockers_amount}}</span> Spinde frei</p>
+<p><span style="font-weight: bold;">{{blocked_lockers_amount}}</span> Spinde gesperrt</p>
+<p><span style="font-weight: bold;">{{not_picked_up_amount}}</span> Spinde reserviert und noch nicht abgeholt <a href="{{url_for('bp_admin.admin_nicht_abgeholte_spinde')}}">(anzeigen)</a></p>
+
+</div>
+{% endblock %}

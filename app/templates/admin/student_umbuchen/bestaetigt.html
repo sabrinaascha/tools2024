@@ -1,0 +1,19 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+Bestaetigt!
+
+<p>Möchten Sie den alten Spind jetzt sperren?</p>
+
+<form action="{{ url_for('bp_admin.admin_student_umbuchen_gesperrt')}}" method="POST">
+    {{ sperren_form.hidden_tag()}}
+
+    {{ sperren_form.submit()}}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+</div>
+{% endblock %}

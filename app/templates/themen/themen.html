@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block pageContent %}
+
+<!-- Header -->
+<div class="w3-container w3-center" style="padding-bottom: 32px;">
+  <h1><b>Themen</b></h1>
+</div>
+
+<!-- Themen anzeigen -->
+<div class="w3-container">
+  {% for projekt in projekte %}
+    <div class="w3-card w3-margin w3-padding">
+      <h3>{{ projekt.titel }}</h3>
+      <p>{{ projekt.beschreibung }}</p>
+      <!-- Weitere Informationen zu jedem Thema anzeigen -->
+      <!-- Zum Beispiel: Max Anzahl, Studiengang, Fach, Semester, etc. -->
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

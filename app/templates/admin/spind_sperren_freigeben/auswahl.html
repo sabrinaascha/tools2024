@@ -1,0 +1,53 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block body %}
+{{ super() }}
+<div class="w3-container">
+
+<h2>Spind sperrren/freigeben</h2>
+
+<form action="{{ url_for('bp_admin.admin_spind_sperren_freigeben')}}" method="POST">
+    {{ schluessel_form.hidden_tag() }}
+
+    {{ schluessel_form.schluessel.label }}
+    {{ schluessel_form.schluessel() }}
+
+    {% for message in get_flashed_messages(category_filter=["schluessel"]) %}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ schluessel_form.submit() }} 
+</form>
+<p>Oder</p>
+<form action="{{ url_for('bp_admin.admin_spind_sperren_freigeben')}}" method="POST">
+    {{ nummer_form.hidden_tag() }}
+
+    {{ nummer_form.nummer.label }}
+    {{ nummer_form.nummer() }}
+
+    {% for message in get_flashed_messages(category_filter=["nummer"]) %}
+    <p class="w3-text-red">{{ message }}</p>
+    {% endfor %}
+
+    {{ nummer_form.submit() }}
+</form>
+<br>
+<a href="{{url_for('bp_admin.admin')}}">Zurück zur Startseite</a>
+
+<p>Derzeit gesperrte Spinde:</p>
+<table class="w3-table w3-striped w3-border">
+    <tr>
+        <th>Spind Nummer</th>
+        <th>Schlüssel</th>
+        <th>Info</th>
+    </tr>
+    {% for locker in blocked_lockers %}
+        <tr>
+            <td>{{ locker.nummer }}</td>
+            <td>{{ locker.schluessel }}</td>
+            <td>{{ locker.info }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}
