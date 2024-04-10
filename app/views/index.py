@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify
 from flask_login import current_user, login_required
-from app.models import Html, Spinde, Superusers
+from app.models import Html, Spinde, Superusers , Mitarbeiter
+from app.helpers import get_mitarbeiter
 
 # BLUEPRINT "bp_index"
 bp_index = Blueprint("bp_index", __name__)
@@ -84,6 +85,10 @@ bp_profile = Blueprint("bp_profile", __name__, url_prefix="/profile")
 @bp_profile.route("/")
 @login_required
 def profile():
+    mitarbeiter = get_mitarbeiter()
+    #is_mitarbeiter = mitarbeiter is not None
+    namemitarbeiter = mitarbeiter.nachname
+    is_mitarbeiter = Mitarbeiter.query.filter_by(nds=current_user.nds).first() is not None
     # Gets all Student data
     studentData = getStudentInformationList()
 
@@ -109,6 +114,9 @@ def profile():
         lockerInformation=lockerData[1:],
         studentHasReservationVis=hasReservationVis,
         studentHasNoReservationVis=hasNoReservationVis,
+        is_mitarbeiter=is_mitarbeiter,  # Übergeben des Flag für Mitarbeiterstatus an die Vorlage
+        mitarbeiter=mitarbeiter,
+        namemitarbeiter=namemitarbeiter
     )
 
 

@@ -34,7 +34,53 @@ class Projekt(db.Model):
     
     def get_all_projekte():
         query = Projekt.query
-        return query    
+        return query   
+class Lehrstuhl(db.Model):
+    __tablename__ = 'lehrstuhl'
+    
+    lehrstuhl_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40))
+    homepage = db.Column(db.String(50))
+
+    def __init__(self, name, homepage):
+        self.name = name
+        self.homepage = homepage
+        
+
+class Mitarbeiter(db.Model):
+    __tablename__ = 'mitarbeiter'
+    
+    ma_id = db.Column(db.Integer, primary_key=True)
+    vorname = db.Column(db.String(20))
+    nachname = db.Column(db.String(20))
+    nds = db.Column(db.String(10))
+    email = db.Column(db.String(30))
+    rolle = db.Column(db.Integer)
+    Lehrstuhl_lehrstuhl_id = db.Column(db.Integer, db.ForeignKey('lehrstuhl.lehrstuhl_id'), nullable=False)
+    lehrstuhl = db.relationship('Lehrstuhl', backref=db.backref('mitarbeiter', lazy=True))
+
+    def __init__(self, vorname, nachname, nds, email, rolle, Lehrstuhl_lehrstuhl_id):
+        self.vorname = vorname
+        self.nachname = nachname
+        self.nds = nds
+        self.email = email
+        self.rolle = rolle
+        self.Lehrstuhl_lehrstuhl_id = Lehrstuhl_lehrstuhl_id  
+
+    @staticmethod
+    def get_all_Mitarbeiter():
+        return Mitarbeiter.query.all()
+
+    def get_mitarbeiter(nds=""):
+        if nds != "":
+            mitarbeiter = Mitarbeiter.query.filter_by(nds=nds).first()
+        return mitarbeiter 
+
+    #def get_mitarbeiter(nds=None):
+     #   if nds:
+    #    return Mitarbeiter.query.filter_by(nds=nds).first()
+    #return None  
+
     
 
 class Spinde(db.Model):

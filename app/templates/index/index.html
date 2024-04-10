@@ -22,6 +22,10 @@
     <h3 class="w3-margin w3-xxlarge">Willkommen auf der Startseite der Vergabetools.</h3>
 
 Liebe Studierende, untenstehend können sie zu den einzelnen Seminaren und Abschlussarbeiten die aktuell angebotenen Themen einsehen. Alternativ haben Sie über die Themen Suche die Möglichkeit genau nach Ihren Bedürfnissen zu filtern.
+{% if current_user.is_authenticated %}
+    <p>Benutzer angemeldet.</p>
+    <p>info: {{ current_user.nds }}</p>
+      {% endif %}
 </div>
 
 <!-- First Row of Images -->

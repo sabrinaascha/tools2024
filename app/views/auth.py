@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 import ldap
+from app.models import Mitarbeiter
 
 bp_auth = Blueprint("bp_auth", __name__, url_prefix="/auth")
 
@@ -11,11 +12,12 @@ loginManager.login_view = "bp_auth.login"
     
 
 class User(UserMixin):
-    def __init__(self, nds, vorname, nachname, mail, ):
+    def __init__(self, nds, vorname, nachname, mail, neuer_reiter=False):
        self.nds = nds
        self.vorname = vorname
        self.nachname = nachname
        self.mail = mail
+       self.neuer_reiter = neuer_reiter
     
     def get_id(self):
         return self.nds
