@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify
 from flask_login import current_user, login_required
-from app.models import Html, Spinde, Superusers , Mitarbeiter
+from app.models import Html, Spinde, Superusers , Mitarbeiter , Lehrstuhl
 from app.helpers import get_mitarbeiter
 
 # BLUEPRINT "bp_index"
@@ -85,10 +85,15 @@ bp_profile = Blueprint("bp_profile", __name__, url_prefix="/profile")
 @bp_profile.route("/")
 @login_required
 def profile():
-    mitarbeiter = get_mitarbeiter()
-    #is_mitarbeiter = mitarbeiter is not None
-    namemitarbeiter = mitarbeiter.nachname
     is_mitarbeiter = Mitarbeiter.query.filter_by(nds=current_user.nds).first() is not None
+    mitarbeiter = None
+    alle_mitarbeiter = None
+
+    if is_mitarbeiter:
+        mitarbeiter, lehrstuhl = get_mitarbeiter()
+        lehrstuhl = Lehrstuhl.query.get(mitarbeiter.Lehrstuhl_lehrstuhl_id)
+        alle_mitarbeiter = Mitarbeiter.query.filter_by(Lehrstuhl_lehrstuhl_id=lehrstuhl.lehrstuhl_id).all()
+    
     # Gets all Student data
     studentData = getStudentInformationList()
 
@@ -116,8 +121,8 @@ def profile():
         studentHasNoReservationVis=hasNoReservationVis,
         is_mitarbeiter=is_mitarbeiter,  # Übergeben des Flag für Mitarbeiterstatus an die Vorlage
         mitarbeiter=mitarbeiter,
-        namemitarbeiter=namemitarbeiter
-    )
+        alle_mitarbeiter=alle_mitarbeiter
+        )
 
 
 # Checks if user has a reservation or not
@@ -128,6 +133,12 @@ def checkStudentReservation():
     else:
         return False
 
+def checkMitarbeiter():
+    # Does the user already Mitarbeier
+    if current_user.nds in Mitarbeiter.get_all_nds():
+        return True
+    else:
+        return False
 
 # BLUEPRINT "bp_preise"
 bp_preise = Blueprint("bp_preise", __name__, url_prefix="/preise")

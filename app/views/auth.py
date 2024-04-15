@@ -12,13 +12,12 @@ loginManager.login_view = "bp_auth.login"
     
 
 class User(UserMixin):
-    def __init__(self, nds, vorname, nachname, mail, neuer_reiter=False):
+    def __init__(self, nds, vorname, nachname, mail,):
        self.nds = nds
        self.vorname = vorname
        self.nachname = nachname
        self.mail = mail
-       self.neuer_reiter = neuer_reiter
-    
+           
     def get_id(self):
         return self.nds
 

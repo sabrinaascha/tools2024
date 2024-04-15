@@ -5,35 +5,36 @@
 <!-- Header -->
 <div class="w3-container w3-center" style="padding-bottom: 32px;">
   {% if is_mitarbeiter %}
-  <h1><b>Mitarbeiter Profilseite und links für die Bearbeitung</b></h1>
- </div>
-      <p>Mitarbeiter-Daten: {{ namemitarbeiter }}</p>
-        <ul>
-        <p>ID: {{ mitarbeiter.ma_id }}</p>
-        <p>Vorname: {{ mitarbeiter.vorname }}</p>
-        <p>Nachname: {{ mitarbeiter.nachname }}</p>
-        <p>NDS: {{ mitarbeiter.nds }}</p>
-        <p>E-Mail: {{ mitarbeiter.email }}</p>
-        </ul>
-    {% else %}
-        <p>Du bist kein Mitarbeiter.</p>
-    {% endif %}
-    
-<!-- Profile Card -->
+  {% if mitarbeiter %}
+
+               {% endif %}
+ <h1><b>Mitarbeiter Profilseite und links für die Bearbeitung vom {{ mitarbeiter.lehrstuhl.name }}</b></h1>
+    <!-- Profile Card -->
 <div class="w3-container w3-center w3-padding-16" style="display: inline-block;">
   <div id="studentCard" class="w3-card w3-center" style="min-width: 250px; display: inline-block;">
-    <header id="studentName" class="w3-container w3-wiwi-color">
+    <header id="studentName" class="w3-container w3-fids-color">
       <h3>{{ studentName | safe }}</h3>
     </header>
-
     <div id="studentPrivateData" class="w3-container">
       {% for o in studentPrivateData %}
       <p value="{{ o | safe }}">{{ o | safe }}</p>
       {% endfor %}
     </div>
-
     <footer class="w3-container w3-wiwi-color"></footer>
   </div>
+</div>
+
+     <div class="w3-container w3-center w3-padding-16">
+    <a href="{{ url_for('bp_mitarbeiter.mitarbeiter')}}"
+      class="w3-button w3-fids-color w3-padding-large w3-large w3-margin-top w3-round">Mitarbeiter</a>
+  </div>     
+    {% else %}
+        <p>Du bist kein Mitarbeiter.</p>
+            {% endif %}
+    
+<div class="w3-container w3-center w3-padding-16">
+  <a href="{{ url_for('bp_auth.logout')}}"
+    class="w3-button w3-red w3-padding-large w3-large w3-margin-top w3-round">Logout</a>
 </div>
 
 <!-- Already owning a Locker -->
@@ -56,23 +57,6 @@
     </div>
   </div>
 
-</div>
-
-<!-- Able to reserve a locker -->
-<div class="w3-container w3-padding-16" id="studentHasNoReservation" {{ studentHasNoReservationVis }}>
-
-  <!-- Mieten Button -->
-  <div class="w3-container w3-center w3-padding-16">
-    <a href="{{ url_for('bp_mieten.mieten')}}"
-      class="w3-button w3-wiwi-color w3-padding-large w3-large w3-margin-top w3-round">Jetzt Mieten</a>
-  </div>
-
-</div>
-
-<!-- Logout Button -->
-<div class="w3-container w3-center w3-padding-16">
-  <a href="{{ url_for('bp_auth.logout')}}"
-    class="w3-button w3-red w3-padding-large w3-large w3-margin-top w3-round">Logout</a>
 </div>
 
 {% endblock %}

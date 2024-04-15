@@ -76,10 +76,12 @@ class Mitarbeiter(db.Model):
             mitarbeiter = Mitarbeiter.query.filter_by(nds=nds).first()
         return mitarbeiter 
 
-    #def get_mitarbeiter(nds=None):
-     #   if nds:
-    #    return Mitarbeiter.query.filter_by(nds=nds).first()
-    #return None  
+    def get_all_nds():
+        query = Mitarbeiter.query.filter(Mitarbeiter.nds != "0").all()
+        all_nds = []
+        for entry in query:
+            all_nds.append(entry.nds)
+        return all_nds
 
     
 

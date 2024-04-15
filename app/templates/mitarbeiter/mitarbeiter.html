@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block pageContent %}
+
+<div class="w3-container w3-center" style="padding-bottom: 32px;">
+  {% if is_mitarbeiter %}
+  {% if mitarbeiter %}
+               {% endif %}
+ 
+    
+
+
+<h2>Mitarbeiter von {{ mitarbeiter.lehrstuhl.name }}:</h2>
+    <table class="w3-table w3-striped w3-border">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>NDS</th>
+                <th>E-Mail</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mitarbeiter in alle_mitarbeiter %}
+                <tr>
+                    <td>{{ mitarbeiter.ma_id }}</td>
+                    <td>{{ mitarbeiter.vorname }}</td>
+                    <td>{{ mitarbeiter.nachname }}</td>
+                    <td>{{ mitarbeiter.nds }}</td>
+                    <td>{{ mitarbeiter.email }}</td>
+                    <td>
+                      
+
+                        </td>
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>Du bist kein Mitarbeiter.</p>
+    {% endif %}
+
+
+{% endblock %}

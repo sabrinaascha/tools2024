@@ -39,6 +39,7 @@ from app.views.mieten import bp_mieten
 from app.views.admin import bp_admin
 from app.views.auth import bp_auth
 from app.views.themen import bp_themen
+from app.views.mitarbeiter import bp_mitarbeiter
 
 # register blueprints
 app.register_blueprint(bp_index, url_prefix="")
@@ -51,3 +52,5 @@ app.register_blueprint(bp_mieten, url_prefix="/mieten")
 app.register_blueprint(bp_admin, url_prefix="/admin")
 app.register_blueprint(bp_auth, url_prefix="/auth")
 app.register_blueprint(bp_themen, url_prefix="/themen")
+app.register_blueprint(bp_mitarbeiter, url_prefix="/mitarbeiter")
+
