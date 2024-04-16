@@ -8,7 +8,9 @@ class Art(db.Model):
     art_id = db.Column(db.Integer, primary_key=True)
     art_typ = db.Column(db.Integer)
 
+
 class Projekt(db.Model):
+    __tablename__ = 'projekt'
     projekt_id = db.Column(db.Integer, primary_key=True)
     titel = db.Column(db.String(100))
     beschreibung = db.Column(db.String(200))
@@ -18,6 +20,10 @@ class Projekt(db.Model):
     semester = db.Column(db.Integer)
     neu = db.Column(db.Integer)
     Art_art_id = db.Column(db.Integer, db.ForeignKey('art.art_id'), nullable=False)
+    
+    #betreuer = db.relationship('Projekt_Betreuer', backref=db.backref('projekt', lazy='subquery'))
+    betreute_projekte = db.relationship('Projekt_Betreuer', backref='projekt', lazy=True)
+
 
     def __init__(self, titel, beschreibung, max_anzahl, studiengang, fach, semester, neu, Art_art_id):
         self.titel = titel
@@ -28,13 +34,15 @@ class Projekt(db.Model):
         self.semester = semester
         self.neu = neu
         self.Art_art_id = Art_art_id
+        self.betreute_projekte = []
 
     def show_all_values(self):
         return Projekt
     
     def get_all_projekte():
         query = Projekt.query
-        return query   
+        return query  
+
 class Lehrstuhl(db.Model):
     __tablename__ = 'lehrstuhl'
     
@@ -59,6 +67,9 @@ class Mitarbeiter(db.Model):
     Lehrstuhl_lehrstuhl_id = db.Column(db.Integer, db.ForeignKey('lehrstuhl.lehrstuhl_id'), nullable=False)
     lehrstuhl = db.relationship('Lehrstuhl', backref=db.backref('mitarbeiter', lazy=True))
 
+    betreute_projekte = db.relationship('Projekt_Betreuer', backref=db.backref('betreuer', lazy='subquery'))
+
+        
     def __init__(self, vorname, nachname, nds, email, rolle, Lehrstuhl_lehrstuhl_id):
         self.vorname = vorname
         self.nachname = nachname
@@ -83,7 +94,18 @@ class Mitarbeiter(db.Model):
             all_nds.append(entry.nds)
         return all_nds
 
-    
+class Projekt_Betreuer(db.Model):
+    __tablename__ = 'projekt_betreuer'
+    pb_id = db.Column(db.Integer, primary_key=True)
+    Mitarbeiter_ma_id = db.Column(db.Integer, db.ForeignKey('mitarbeiter.ma_id'))
+    Projekt_projekt_id = db.Column(db.Integer, db.ForeignKey('projekt.projekt_id'))    
+
+    __table_args__ = {'extend_existing': True}
+
+def get_all_projekt_betreuer():
+    betreuer = Projekt_Betreuer.query.all()
+    return betreuer
+
 
 class Spinde(db.Model):
     nummer = db.Column(db.Integer, primary_key=True)

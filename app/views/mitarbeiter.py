@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, url_for
 from flask_login import current_user, login_required
-from app.models import Spinde, Html , Mitarbeiter , Lehrstuhl
+from app.models import Spinde, Html , Mitarbeiter , Lehrstuhl , Projekt , Projekt_Betreuer , get_all_projekt_betreuer
 from app.helpers import get_mitarbeiter
 from datetime import date
 from random import randrange
@@ -32,6 +32,19 @@ def mitarbeiter():
     alle_mitarbeiter = Mitarbeiter.query.filter_by(Lehrstuhl_lehrstuhl_id=lehrstuhl.lehrstuhl_id).all()
     # Gets all Student data
     studentData = getStudentInformationList()
+    projekte = Projekt.get_all_projekte()
+
+    projekt_betreuer = get_all_projekt_betreuer()
+    betreuer_info = []
+    for pb in projekt_betreuer:
+        betreuer_info.append({
+            'Projekt Betreuer ID': pb.pb_id,
+            'Mitarbeiter ID': pb.Mitarbeiter_ma_id,
+            'Projekt ID': pb.Projekt_projekt_id
+        })
+
+
+    
 
     # Gets all Locker data
     if current_user.nds in Spinde.get_all_nds():
@@ -71,8 +84,10 @@ def mitarbeiter():
         areaOptionsHTML=areaOptionsHTML,
         is_mitarbeiter=is_mitarbeiter,  # Übergeben des Flag für Mitarbeiterstatus an die Vorlage
         mitarbeiter=mitarbeiter,
-        alle_mitarbeiter=alle_mitarbeiter
-    )
+        alle_mitarbeiter=alle_mitarbeiter,
+        projekte=projekte,
+        betreuer_info=betreuer_info
+            )
 
 
 # MIETEN PAGE START & DYNAMIC UPDATE

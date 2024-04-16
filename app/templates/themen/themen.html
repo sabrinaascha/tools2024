@@ -4,15 +4,31 @@
 
 <!-- Header -->
 <div class="w3-container w3-center" style="padding-bottom: 32px;">
-  <h1><b>Themen</b></h1>
+  <h3><b>Alle Themen unsortiert, sortierung könnte nach Art_art_id erfolgen. in der tabelle Art ist der typ hier überlegen ob hier gleich der string steht z.b. Projektseminar Praxisseminar Theoretisches Seminar Masterarbeit Bachelorarbeit </b></h3>
 </div>
 
 <!-- Themen anzeigen -->
 <div class="w3-container">
-  {% for projekt in projekte %}
+    {% for projekt in projekte %}
     <div class="w3-card w3-margin w3-padding">
-      <h3>{{ projekt.titel }}</h3>
+      <h3>{{ projekt.projekt_id }} {{ projekt.titel }}</h3>
+      <h4>{{ projekt.Art_art_id }} </h4>
       <p>{{ projekt.beschreibung }}</p>
+      <p><strong>Betreuer:</strong>
+
+  {% set betreuer_namen = [] %}             
+  {% for projekt_betreuer in projekt.betreute_projekte %}
+    {% set mitarbeiter = projekt_betreuer.betreuer %}
+      {% set _ = betreuer_namen.append(mitarbeiter.vorname ~ " " ~ mitarbeiter.nachname) %}
+{% endfor %}
+{{ betreuer_namen|join(', ') if betreuer_namen else 'Keine Betreuer' }}
+    
+
+      </p>
+      <p><strong>Max Anzahl:</strong> {{ projekt.max_anzahl }}</p>
+      <p><strong>Studiengang:</strong> {{ projekt.studiengang }}</p>
+      <p><strong>Fach:</strong> {{ projekt.fach }}</p>
+      <p><strong>Semester:</strong> {{ projekt.semester }}</p>
       <!-- Weitere Informationen zu jedem Thema anzeigen -->
       <!-- Zum Beispiel: Max Anzahl, Studiengang, Fach, Semester, etc. -->
     </div>
