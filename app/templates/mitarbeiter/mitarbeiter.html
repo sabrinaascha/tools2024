@@ -46,33 +46,31 @@
         </tbody>
     </table>
 
+<h3>LstID {{ mitarbeiter.lehrstuhl.lehrstuhl_id }} </h3>
+
+  <h4>Projekte des Lehrstuhls:</h4>
+  <table class="w3-table w3-striped w3-border">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titel</th>
+      <th>Beschreibung</th>
+      <!-- Weitere Spaltenüberschriften hier -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for projekt in projekte %}
+      <tr>
+        <td>{{ projekt.projekt_id }}</td>
+        <td>{{ projekt.titel }}</td>
+        <td>{{ projekt.beschreibung }}</td>
+        <!-- Weitere Projektinformationen hier -->
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 
-
-
-    <div class="w3-container">
-  {% for projekt in projekte %}
-    <div class="w3-card w3-margin w3-padding">
-      <h3>{{ projekt.titel }}</h3>
-      <h3>Projekt ID: {{ projekt.projekt_id }}</h3>
-      <p>{{ projekt.beschreibung }}</p>
-      <p><strong>Mitarbeiter:</strong>
-               <ul>
-  {% for projekt_betreuer in projekt.betreute_projekte %}
-    {% set mitarbeiter = projekt_betreuer.betreuer %}
-    <li>{{ mitarbeiter.vorname }} {{ mitarbeiter.nachname }}</li>
-  {% endfor %}
-</ul>
-      </p>
-      <p><strong>Max Anzahl:</strong> {{ projekt.max_anzahl }}</p>
-      <p><strong>Studiengang:</strong> {{ projekt.studiengang }}</p>
-      <p><strong>Fach:</strong> {{ projekt.fach }}</p>
-      <p><strong>Semester:</strong> {{ projekt.semester }}</p>
-      
-
-    </div>
-  {% endfor %}
-</div>
     {% else %}
         <p>Du bist kein Mitarbeiter.</p>
     {% endif %}

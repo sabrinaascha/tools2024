@@ -25,14 +25,14 @@ logger = logging.getLogger(__name__)
 @login_required
 def mitarbeiter():
     mitarbeiter, lehrstuhl = get_mitarbeiter()
-    #is_mitarbeiter = mitarbeiter is not None
-    #lehrstuhl = mitarbeiter.lehrstuhl
+    lehrstuhl_id = lehrstuhl.lehrstuhl_id
     lehrstuhl = Lehrstuhl.query.get(mitarbeiter.Lehrstuhl_lehrstuhl_id)
     is_mitarbeiter = Mitarbeiter.query.filter_by(nds=current_user.nds).first() is not None
     alle_mitarbeiter = Mitarbeiter.query.filter_by(Lehrstuhl_lehrstuhl_id=lehrstuhl.lehrstuhl_id).all()
     # Gets all Student data
     studentData = getStudentInformationList()
     projekte = Projekt.get_all_projekte()
+    projekte_lehrstuhl = Projekt.get_projekte_by_lehrstuhl(lehrstuhl_id)
 
     projekt_betreuer = get_all_projekt_betreuer()
     betreuer_info = []
@@ -85,7 +85,7 @@ def mitarbeiter():
         is_mitarbeiter=is_mitarbeiter,  # Übergeben des Flag für Mitarbeiterstatus an die Vorlage
         mitarbeiter=mitarbeiter,
         alle_mitarbeiter=alle_mitarbeiter,
-        projekte=projekte,
+        projekte=projekte_lehrstuhl,
         betreuer_info=betreuer_info
             )
 

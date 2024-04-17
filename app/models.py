@@ -6,7 +6,7 @@ db = SQLAlchemy()
 # Tables
 class Art(db.Model):
     art_id = db.Column(db.Integer, primary_key=True)
-    art_typ = db.Column(db.Integer)
+    art_typ = db.Column(db.String(50))
 
 
 class Projekt(db.Model):
@@ -20,7 +20,11 @@ class Projekt(db.Model):
     semester = db.Column(db.Integer)
     neu = db.Column(db.Integer)
     Art_art_id = db.Column(db.Integer, db.ForeignKey('art.art_id'), nullable=False)
-    
+    Lehrstuhl_lehrstuhl_id = db.Column(db.Integer, db.ForeignKey('lehrstuhl.lehrstuhl_id'), nullable=False)
+
+    art = db.relationship('Art', backref=db.backref('projekte', lazy=True))
+    lehrstuhl = db.relationship('Lehrstuhl', backref=db.backref('projekte', lazy=True))
+
     #betreuer = db.relationship('Projekt_Betreuer', backref=db.backref('projekt', lazy='subquery'))
     betreute_projekte = db.relationship('Projekt_Betreuer', backref='projekt', lazy=True)
 
@@ -34,6 +38,7 @@ class Projekt(db.Model):
         self.semester = semester
         self.neu = neu
         self.Art_art_id = Art_art_id
+        self.Lehrstuhl_lehrstuhl_id = Lehrstuhl_lehrstuhl_id
         self.betreute_projekte = []
 
     def show_all_values(self):
@@ -42,6 +47,11 @@ class Projekt(db.Model):
     def get_all_projekte():
         query = Projekt.query
         return query  
+
+    @staticmethod
+    def get_projekte_by_lehrstuhl(lehrstuhl_id):
+        return Projekt.query.filter_by(Lehrstuhl_lehrstuhl_id=lehrstuhl_id).all()
+            
 
 class Lehrstuhl(db.Model):
     __tablename__ = 'lehrstuhl'
