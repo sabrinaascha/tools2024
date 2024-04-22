@@ -276,7 +276,7 @@ class Spinde(db.Model):
         groups_and_lockers = {}
 
         for group in groups:
-            query = self.query.filter_by(gruppe=group, gesperrt=0, nds=0).all()
+            query = self.query.filter_by(gruppe=group, gesperrt=0, nds="0").all()
             lockers = []
             for locker in query:
                 lockers.append(locker.nummer)
@@ -337,7 +337,7 @@ class Spinde(db.Model):
 
     # get all free lockers
     def get_nds_of_free_lockers():
-        query = Spinde.query.filter_by(gesperrt=0, nds=0).all()
+        query = Spinde.query.filter_by(gesperrt=0, nds="0").all()
         lockers = []
         for entry in query:
             lockers.append(entry.nummer)
@@ -352,7 +352,7 @@ class Spinde(db.Model):
         return query
     
     def get_free_lockers():
-        query = Spinde.query.filter_by(gesperrt=0, nds=0)
+        query = Spinde.query.filter_by(gesperrt=0, nds="0")
         return query
     
     def get_rented_lockers():
